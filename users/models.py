@@ -11,6 +11,13 @@ class USER_TYPE(models.IntegerChoices):
     WORKER = 3, "Worker"
 
 
+class WORKER_TYPE(models.IntegerChoices):
+    IT = 2, "IT"
+    WORKER = 5, "Worker"
+    CLEANER = 6, "Cleaner"
+    OTHER = 7, "Other"
+
+
 class BaseModel(models.Model):
     """
     Base model with common fields like ID, creation timestamp,
@@ -68,3 +75,24 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
             if self.first_name and self.last_name
             else self.email
         )
+
+
+class Worker(BaseModel):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+    )
+    worker_type = models.IntegerField(
+        choices=WORKER_TYPE.choices, default=WORKER_TYPE.OTHER
+    )
+    is_busy = models.BooleanField(default=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["worker_type"]),
+            models.Index(fields=["is_busy"]),
+            models.Index(fields=["worker_type","is_busy"]),
+        ]
+
+    def __str__(self):
+        return f"{self.user}: {self.worker_type}"
