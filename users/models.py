@@ -91,7 +91,7 @@ class Worker(BaseModel):
         indexes = [
             models.Index(fields=["worker_type"]),
             models.Index(fields=["is_busy"]),
-            models.Index(fields=["worker_type","is_busy"]),
+            models.Index(fields=["worker_type", "is_busy"]),
         ]
 
     def __str__(self):
