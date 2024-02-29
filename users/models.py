@@ -1,8 +1,10 @@
 import uuid
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+from users.manager import CustomUserManager
 
 
 class USER_TYPE(models.IntegerChoices):
@@ -38,7 +40,7 @@ class BaseModel(models.Model):
         ordering = ["created"]
 
 
-class User(BaseModel, AbstractBaseUser, PermissionsMixin):
+class User(BaseModel, AbstractUser, PermissionsMixin):
     """
     Custom user model representing a user in the system.
     """
@@ -51,6 +53,9 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     role = models.IntegerField(
         choices=USER_TYPE.choices, default=USER_TYPE.USER, help_text="User role."
     )
+
+    objects = CustomUserManager()
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
