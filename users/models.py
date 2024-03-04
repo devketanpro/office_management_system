@@ -28,7 +28,7 @@ class BaseModel(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     is_active = models.BooleanField(
-        default=False, help_text="Indicates if the record is active."
+        default=True, help_text="Indicates if the record is active."
     )
     is_deleted = models.BooleanField(
         default=False, help_text="Indicates if the record is deleted."
@@ -47,7 +47,7 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
 
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    phone = models.CharField(max_length=25, unique=True)
+    phone = models.CharField(max_length=25)
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
     role = models.IntegerField(
@@ -83,9 +83,14 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
 
 
 class Worker(BaseModel):
+    """
+    Represents a worker in the system.
+    """
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
+        limit_choices_to={"role": 3, "worker__isnull": True},
     )
     worker_type = models.IntegerField(
         choices=WORKER_TYPE.choices, default=WORKER_TYPE.OTHER
@@ -100,4 +105,11 @@ class Worker(BaseModel):
         ]
 
     def __str__(self):
+        """
+        Return a string representation of the worker.
+
+        Returns:
+            str: A formatted string containing information about the worker.
+        """
+
         return f"{self.user}: {self.worker_type}"
