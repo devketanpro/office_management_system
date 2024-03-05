@@ -6,11 +6,12 @@ from rest_framework.response import Response
 
 
 from users.permissions import AdminPermission, UserPermission
-from offices.models import Office, UserOffice, UserRequest
+from offices.models import Assignment, Office, UserOffice, UserRequest
 from offices.serializers import (
     OfficeSerializer, 
     UserOfficeSerializer,
     UserRequestSerializer,
+    AssignmentSerializer,
 )
 
 
@@ -37,13 +38,12 @@ class UserOfficeViewSet(viewsets.ModelViewSet):
 
 
 class GetUserOfficeView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = UserOfficeSerializer
-    pagination_class = PageNumberPagination
-
     __doc__ = """
         This API is designed to exclusively return the list of currently requested user offices.
     """
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserOfficeSerializer
+    pagination_class = PageNumberPagination
 
     def get(self, request, *args, **kwargs):
         user_office = UserOffice.objects.filter(
@@ -55,11 +55,11 @@ class GetUserOfficeView(generics.ListAPIView):
 
 
 class RaiseRequestView(generics.CreateAPIView):
-    serializer_class = UserRequestSerializer
-    permission_classes = [UserPermission]
     __doc__ = """
             This API is used to raise request by the user.
     """
+    serializer_class = UserRequestSerializer
+    permission_classes = [UserPermission]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={'request': request})
@@ -69,13 +69,12 @@ class RaiseRequestView(generics.CreateAPIView):
 
 
 class GetRequestInfoView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = UserRequestSerializer
-    pagination_class = PageNumberPagination
-
     __doc__ = """
         This API is designed to exclusively return the list of currently requested user offices.
     """
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserRequestSerializer
+    pagination_class = PageNumberPagination
 
     def get(self, request, *args, **kwargs):
         user_office = UserRequest.objects.filter(
@@ -83,3 +82,13 @@ class GetRequestInfoView(generics.ListAPIView):
         )
         serializer = self.serializer_class(user_office, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ManageAssignmentView(generics.UpdateAPIView):
+    __doc__ = """
+        This API handle assignment like assign worker, \
+        change status and update priority.
+    """
+    queryset = Assignment.objects.all()
+    serializer_class = AssignmentSerializer
+    lookup_field = 'pk'

@@ -6,7 +6,8 @@ from offices.views import (
     UserOfficeViewSet, 
     GetUserOfficeView, 
     RaiseRequestView,
-    GetRequestInfoView
+    GetRequestInfoView,
+    ManageAssignmentView,
     )
 
 router = DefaultRouter()
@@ -17,6 +18,7 @@ urlpatterns = [
     path("user-office-list/", GetUserOfficeView.as_view(), name = "user_office_list"),
     path('raise-request/', RaiseRequestView.as_view(), name='raise_request'),
     path('track-request/', GetRequestInfoView.as_view(), name='track_request'),
+    path('manage-assignment/<str:pk>/', ManageAssignmentView.as_view(), name='manage_assignment'),
 ]
 
 urlpatterns += router.urls

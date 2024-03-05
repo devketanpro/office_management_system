@@ -15,14 +15,20 @@ class UserOfficeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class AssignmentListSerializer(serializers.ModelSerializer):
+class AssignmentSerializer(serializers.ModelSerializer):
+    worker_name = serializers.SerializerMethodField()
     class Meta:
         model = Assignment
-        fields = ('priority', 'status', 'worker')
+        fields = ('id', 'priority', 'status', 'worker', 'worker_name')
+    
+    def get_worker_name(self, obj):
+        if obj.worker:
+            return obj.worker.user.first_name + " " + obj.worker.user.last_name 
+        return None
 
 
 class UserRequestSerializer(serializers.ModelSerializer):
-    assignment = AssignmentListSerializer(required=False)
+    assignment = AssignmentSerializer(required=False)
     submitted_by = serializers.PrimaryKeyRelatedField(
         queryset=UserOffice.objects.all()
     )
