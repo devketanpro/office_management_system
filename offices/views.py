@@ -77,6 +77,7 @@ class GetRequestInfoView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def get(self, request, *args, **kwargs):
+        
         user_office = UserRequest.objects.filter(
             submitted_by__user = request.user
         )
@@ -89,6 +90,7 @@ class ManageAssignmentView(generics.UpdateAPIView):
         This API handle assignment like assign worker, \
         change status and update priority.
     """
+    permission_classes = [AdminPermission]
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
     lookup_field = 'pk'
