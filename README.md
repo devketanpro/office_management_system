@@ -8,6 +8,7 @@ This system serves as a centralized platform for managing all aspects related to
   - [Functionality](#functionality)
   - [Installation](#installation)
 - [Usage](#usage)
+- [Postman Collection](#postman_collection)
 - [License](#license)
 
 
@@ -119,6 +120,8 @@ List the software and tools that need to be installed before running the project
 
 13. This api (`http://localhost:8000/manage-assignment/<str:pk>/`) is basically for Admin to manae Assignment bassed on user request,  it take assignment_id and manage this like change priority, manage status, assign worker.
 
+## Postman Collection
+Here we find postman collection [Postman Collection](./Office%20Management.postman_collection.json)
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE.md](LICENSE.md) file for details.

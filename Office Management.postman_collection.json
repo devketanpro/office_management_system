@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "a3649d5f-60c1-4c4e-b90e-f06edaaa8dca",
+		"name": "Office Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24940492"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8000/sign-up/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test_cred@gmail.com\",\n    \"phone\":\"09876543211\",\n    \"password\":\"Mycred@123\",\n    \"first_name\":\"foo\",\n    \"last_name\":\"bar\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/sign-up/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"sign-up",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/token/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"email\":\"test_cred@gmail.com\",\n \"password\":\"Mycred@123\"\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/users/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzQ5NTExLCJpYXQiOjE3MDk2NjMxMTEsImp0aSI6IjViMDllNTI2MGUxMjQ4YTY4YTRmZjc3NGY5ZGMxZTA3IiwidXNlcl9pZCI6IjdiNTk2MmQ1LWQ5MDEtNDA0YS1iNDJkLWI4Y2NjZDY3ZTExMiJ9.26awxOzQ8dBrHZUxK7kS-wGqx9r2XFTeWi5ve51oT_Q",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/workers/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzQ5NTExLCJpYXQiOjE3MDk2NjMxMTEsImp0aSI6IjViMDllNTI2MGUxMjQ4YTY4YTRmZjc3NGY5ZGMxZTA3IiwidXNlcl9pZCI6IjdiNTk2MmQ1LWQ5MDEtNDA0YS1iNDJkLWI4Y2NjZDY3ZTExMiJ9.26awxOzQ8dBrHZUxK7kS-wGqx9r2XFTeWi5ve51oT_Q",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/workers/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"workers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/offices/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzQ5ODU0LCJpYXQiOjE3MDk2NjM0NTQsImp0aSI6IjI3YmNmNGEwYzM0YTRhMTJhNzFmNzk1NTY1ODIyYTYzIiwidXNlcl9pZCI6IjdiNTk2MmQ1LWQ5MDEtNDA0YS1iNDJkLWI4Y2NjZDY3ZTExMiJ9.PiZH3leIlkDfz3ZVNRVHLW1UQey2oz3LTXRM0nLqVRU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"building\":\"Test A Block\",\n    \"floor\":1,\n    \"office_number\":2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/offices/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"offices",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/user-office/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzQ5ODU0LCJpYXQiOjE3MDk2NjM0NTQsImp0aSI6IjI3YmNmNGEwYzM0YTRhMTJhNzFmNzk1NTY1ODIyYTYzIiwidXNlcl9pZCI6IjdiNTk2MmQ1LWQ5MDEtNDA0YS1iNDJkLWI4Y2NjZDY3ZTExMiJ9.PiZH3leIlkDfz3ZVNRVHLW1UQey2oz3LTXRM0nLqVRU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"office\":\"00334a79-a82c-4a8e-9676-22b157b5d91c\",\"user\":\"15637a02-40bf-4af1-93a3-589d2212f2a9\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user-office/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user-office",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/user-office-list/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzA2NTY1LCJpYXQiOjE3MDk2MjAxNjUsImp0aSI6IjRiODJhNjIwNTA3YzQxNzZiMGVlMTczMzVmMmY1MTY4IiwidXNlcl9pZCI6IjE1NjM3YTAyLTQwYmYtNGFmMS05M2EzLTU4OWQyMjEyZjJhOSJ9.sUw2-td1gisOd9X-Uja3bSZEuSQn0UGmjQ9Nlm2vSBI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/user-office-list/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user-office-list",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/raise-request/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzA2NTY1LCJpYXQiOjE3MDk2MjAxNjUsImp0aSI6IjRiODJhNjIwNTA3YzQxNzZiMGVlMTczMzVmMmY1MTY4IiwidXNlcl9pZCI6IjE1NjM3YTAyLTQwYmYtNGFmMS05M2EzLTU4OWQyMjEyZjJhOSJ9.sUw2-td1gisOd9X-Uja3bSZEuSQn0UGmjQ9Nlm2vSBI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"request_type\":4,\n    \"title\":\"my title\",\n    \"preferred_timeframe\":1,\n    \"submitted_by\":\"43e937dc-01e5-478e-a702-a4f811227209\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/raise-request/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"raise-request",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/track-request/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzA2NTY1LCJpYXQiOjE3MDk2MjAxNjUsImp0aSI6IjRiODJhNjIwNTA3YzQxNzZiMGVlMTczMzVmMmY1MTY4IiwidXNlcl9pZCI6IjE1NjM3YTAyLTQwYmYtNGFmMS05M2EzLTU4OWQyMjEyZjJhOSJ9.sUw2-td1gisOd9X-Uja3bSZEuSQn0UGmjQ9Nlm2vSBI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/track-request/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"track-request",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/manage-assignment/c41ace4d-fe13-487e-9049-82bf048b5c4b/",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NzQ5NTExLCJpYXQiOjE3MDk2NjMxMTEsImp0aSI6IjViMDllNTI2MGUxMjQ4YTY4YTRmZjc3NGY5ZGMxZTA3IiwidXNlcl9pZCI6IjdiNTk2MmQ1LWQ5MDEtNDA0YS1iNDJkLWI4Y2NjZDY3ZTExMiJ9.26awxOzQ8dBrHZUxK7kS-wGqx9r2XFTeWi5ve51oT_Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"priority\":2,\"status\":2,\"worker\":\"40b0972d-2fa9-4af4-9765-49e35e6ee5a7\"\n    //here only worker id is allowed which is not busy\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/manage-assignment/c41ace4d-fe13-487e-9049-82bf048b5c4b/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"manage-assignment",
+						"c41ace4d-fe13-487e-9049-82bf048b5c4b",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
