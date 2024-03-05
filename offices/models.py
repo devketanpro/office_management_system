@@ -133,13 +133,14 @@ class Assignment(BaseModel):
         Worker,
         on_delete=models.CASCADE,
         related_name="user_request",
+        null=True,
         limit_choices_to={"is_busy": False},
     )
     priority = models.IntegerField(
-        choices=PRIORITY.choices, default=PRIORITY.LOW, db_index=True
+        choices=PRIORITY.choices, default=PRIORITY.LOW
     )
     status = models.IntegerField(
-        choices=STATUS.choices, default=STATUS.PENDING, db_index=True
+        choices=STATUS.choices, default=STATUS.PENDING
     )
     last_update = models.DateTimeField(default=timezone.now)
     assigned_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -157,7 +158,7 @@ class Assignment(BaseModel):
         Returns:
             str: A formatted string containing information about the assignment.
         """
-        return f"request_id:- {self.request.id} | worker_id:- {self.worker.id}"
+        return f"request_id:- {self.request.id} | status:- {self.status} | priority:- {self.priority}"
 
     def save(self, *args, **kwargs):
         """
@@ -166,6 +167,7 @@ class Assignment(BaseModel):
         Overrides the default save method to update the status of the assigned worker.
         """
 
-        self.worker.is_busy = True
-        self.worker.save()
+        if self.worker:
+            self.worker.is_busy = True
+            self.worker.save()
         super().save(*args, **kwargs)

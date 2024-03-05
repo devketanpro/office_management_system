@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 from users.permissions import AdminPermission, UserPermission
-from offices.models import Office, UserOffice
+from offices.models import Office, UserOffice, UserRequest
 from offices.serializers import (
     OfficeSerializer, 
     UserOfficeSerializer,
@@ -19,7 +19,7 @@ class OfficeViewSet(viewsets.ModelViewSet):
     A viewset that provides the office data
     """
 
-    # permission_classes = [AdminPermission]
+    permission_classes = [AdminPermission]
     queryset = Office.objects.all()
     serializer_class = OfficeSerializer
     pagination_class = PageNumberPagination
@@ -30,7 +30,7 @@ class UserOfficeViewSet(viewsets.ModelViewSet):
     A viewset that provides the user office data
     """
 
-    # permission_classes = [AdminPermission]
+    permission_classes = [AdminPermission]
     queryset = UserOffice.objects.all()
     serializer_class = UserOfficeSerializer
     pagination_class = PageNumberPagination
@@ -56,7 +56,7 @@ class GetUserOfficeView(generics.ListAPIView):
 
 class RaiseRequestView(generics.CreateAPIView):
     serializer_class = UserRequestSerializer
-    # permission_classes = [UserPermission]
+    permission_classes = [UserPermission]
     __doc__ = """
             This API is used to raise request by the user.
     """
@@ -66,3 +66,20 @@ class RaiseRequestView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class GetRequestInfoView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserRequestSerializer
+    pagination_class = PageNumberPagination
+
+    __doc__ = """
+        This API is designed to exclusively return the list of currently requested user offices.
+    """
+
+    def get(self, request, *args, **kwargs):
+        user_office = UserRequest.objects.filter(
+            submitted_by__user = request.user
+        )
+        serializer = self.serializer_class(user_office, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
