@@ -47,9 +47,15 @@ class GetUserOfficeView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def get(self, request, *args, **kwargs):
-        user_office = UserOffice.objects.filter(
-            user = request.user
-        )
+        user_office = UserOffice.objects.none()
+        if request.user.role == USER_TYPE.ADMIN:
+            user_office = UserOffice.objects.filter(
+                user = request.user
+            )
+        if request.user.role == USER_TYPE.USER:
+            user_office = UserOffice.objects.filter(
+                user = request.user
+            )
         serializer = self.serializer_class(user_office, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
