@@ -2,6 +2,7 @@ from rest_framework import generics, status, viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from users.models import USER_TYPE
 
 
 
@@ -77,10 +78,17 @@ class GetRequestInfoView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def get(self, request, *args, **kwargs):
-        
-        user_office = UserRequest.objects.filter(
-            submitted_by__user = request.user
-        )
+        user_office = UserRequest.objects.all()
+        if request.user.role == USER_TYPE.ADMIN:
+            pass
+        if request.user.role == USER_TYPE.USER:
+            user_office = user_office.filter(
+                submitted_by__user = request.user
+            )
+        if request.user.role == USER_TYPE.WORKER:
+            user_office = user_office.filter(
+                assignment__worker = request.user
+            )
         serializer = self.serializer_class(user_office, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
