@@ -104,6 +104,7 @@ class UserRequest(BaseModel):
     submitted_by = models.ForeignKey(UserOffice, on_delete=models.CASCADE)
 
     class Meta:
+        unique_together = ["request_type", "submitted_by"]
         indexes = [
             models.Index(fields=["request_type"]),
         ]

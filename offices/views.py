@@ -5,10 +5,13 @@ from rest_framework.response import Response
 
 
 
-from users.permissions import AdminPermission
-from users.models import USER_TYPE
+from users.permissions import AdminPermission, UserPermission
 from offices.models import Office, UserOffice
-from offices.serializers import OfficeSerializer, UserOfficeSerializer
+from offices.serializers import (
+    OfficeSerializer, 
+    UserOfficeSerializer,
+    UserRequestSerializer,
+)
 
 
 class OfficeViewSet(viewsets.ModelViewSet):
@@ -16,7 +19,7 @@ class OfficeViewSet(viewsets.ModelViewSet):
     A viewset that provides the office data
     """
 
-    permission_classes = [AdminPermission]
+    # permission_classes = [AdminPermission]
     queryset = Office.objects.all()
     serializer_class = OfficeSerializer
     pagination_class = PageNumberPagination
@@ -27,7 +30,7 @@ class UserOfficeViewSet(viewsets.ModelViewSet):
     A viewset that provides the user office data
     """
 
-    permission_classes = [AdminPermission]
+    # permission_classes = [AdminPermission]
     queryset = UserOffice.objects.all()
     serializer_class = UserOfficeSerializer
     pagination_class = PageNumberPagination
@@ -48,3 +51,24 @@ class GetUserOfficeView(generics.ListAPIView):
         )
         serializer = self.serializer_class(user_office, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class RaiseRequestView(generics.CreateAPIView):
+    serializer_class = UserRequestSerializer
+    # permission_classes = [UserPermission]
+    __doc__ = """
+            This API is used to raise request by the user.
+    """
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user_offices = UserOffice.objects.filter(user=request.user,id=request.data.get('submitted_by'))
+        if not user_offices.exists():
+            return Response({
+                "message":"this not a valid office for you"
+            }, status = status.HTTP_201_CREATED)
+        
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
